@@ -13,11 +13,10 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_executable(vl53l1x_node src/vl53l1x_node.cpp src/vl53l1x.cpp)
-ament_target_dependencies(vl53l1x_node rclcpp std_msgs)
-target_link_libraries(vl53l1x_node wiringPi)
+ament_target_dependencies(vl53l1x_node rclcpp sensor_msgs)
 target_include_directories(vl53l1x_node
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
