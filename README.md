@@ -1,5 +1,5 @@
 # ROS2-VL53L1X
-A ROS2 Node to run on a Raspberry Pi.  Reads the VL53L1X via I2C and publishes a sensor_msgs/msg/Range.  Uses the library written for the VL53L1X I2C Distance sensor.
+A ROS2 Node to run on a Raspberry Pi.  Reads the VL53L1X via I2C and publishes a sensor_msgs/msg/Range topic.  Uses the library written for the VL53L1X I2C Distance.
 
 Development environment specifics:
 Raspberry Pi 3
