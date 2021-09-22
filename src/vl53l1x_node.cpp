@@ -34,13 +34,13 @@ class Vl53l1xPublisher : public rclcpp::Node
       sensor.setDistanceMode(Vl53l1x::Long);
       sensor.setMeasurementTimingBudget(50000);
 
-      // Start continuous readings at a rate of one measurement every 50 ms (the
+      // Start continuous readings at a rate of one measurement every 100 ms (the
       // inter-measurement period). This period should be at least as long as the
       // timing budget.
       sensor.startContinuous(100);
 
       // Setup the publisher
-      publisher_ = this->create_publisher<sensor_msgs::msg::Range>("/vl53l1x/range", 5);
+      publisher_ = this->create_publisher<sensor_msgs::msg::Range>("vl53l1x/range", 5);
       timer_ = this->create_wall_timer(
       500ms, std::bind(&Vl53l1xPublisher::timer_callback, this));
     }
