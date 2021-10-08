@@ -21,7 +21,7 @@ Run the package
 ```
 ros2 run vl53l1x vl53l1x_node
 ```
-See the output
+See the output in a seperate terminal
 ```
 ros2 topic echo vl53l1x/range
 ```
