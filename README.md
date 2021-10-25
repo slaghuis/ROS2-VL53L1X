@@ -8,11 +8,16 @@ Ubuntu 20.04.2 LTS
 Node can be improved by adding parameters for the i2c sensor address, distance mode and measurement timing budget.
 
 ## Installation
+Wire the sensor as per manufacturers specifications.  Enable the i2c port on the Raspberry Pi.  A good exmple can be found at [Sparkfun Raspberry Pi SPI and I2C Tutorial](https://learn.sparkfun.com/tutorials/saprberry-pi-spi-and-i2c-tutorial/all).  Ensure that the user that will run the ROS node is in the correct group.
+```
+sudo usermod -aG i2c ubuntu
+```
+
 Clone this repo into the src directory of your ROS2 workspace. See the [ros2 tutorial](https://docs.ros.org/en/foxy/Tutorials/Workspace/Creating-A-Workspace.html) on how to create a workspace.
 ```
 git clone https://github.com/slaghuis/ROS2-VL53L1X.git
 ```
-Back in the root of your workspace, build and install the package.  
+Back in the root of your ROS workspace, build and install the package.  
 ```
 colcon build --packages-select vl53l1x
 . install/setup.bash
