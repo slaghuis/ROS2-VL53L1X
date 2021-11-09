@@ -58,7 +58,7 @@ class Vl53l1xPublisher : public rclcpp::Node
       
       rclcpp::Time now = this->get_clock()->now();
       auto message = sensor_msgs::msg::Range();
-      message.header.frame_id = "vl53l1x"
+      message.header.frame_id = "vl53l1x";
       message.header.stamp = now;
       message.radiation_type = sensor_msgs::msg::Range::INFRARED;
       message.field_of_view = 0.47;              // Typically 27 degrees or 0,471239 radians
