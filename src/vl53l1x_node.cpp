@@ -42,7 +42,7 @@ class Vl53l1xPublisher : public rclcpp::Node
       // Setup the publisher
       publisher_ = this->create_publisher<sensor_msgs::msg::Range>("vl53l1x/range", 5);
       timer_ = this->create_wall_timer(
-      500ms, std::bind(&Vl53l1xPublisher::timer_callback, this));
+      250ms, std::bind(&Vl53l1xPublisher::timer_callback, this));
     }
 
   private:
