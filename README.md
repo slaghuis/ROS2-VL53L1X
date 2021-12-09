@@ -5,8 +5,6 @@ Development environment specifics:
 Raspberry Pi 3
 Ubuntu 20.04.2 LTS
 
-Node can be improved by adding parameters for the i2c sensor address, distance mode and measurement timing budget.
-
 ## Installation
 Wire the sensor as per manufacturers specifications.  Enable the i2c port on the Raspberry Pi.  A good exmple can be found at [Sparkfun Raspberry Pi SPI and I2C Tutorial](https://learn.sparkfun.com/tutorials/saprberry-pi-spi-and-i2c-tutorial/all).  Ensure that the user that will run the ROS node is in the correct group.
 ```
