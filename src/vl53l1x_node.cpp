@@ -17,10 +17,15 @@ class Vl53l1xPublisher : public rclcpp::Node
 {
   public:
     Vl53l1xPublisher()
-    : Node("VL53L1X_publisher"), count_(0)
+    : Node("VL53L1X_publisher")
     {
+      // Declare and get Parameters
+      timeout_ = this->declare_parameter("timeout", 500);
+      timing_budget_ = this->declare_parameter("timing_budget", 50000);
+      freq_ = this->declare_parameter("frequency", 25.0);
+
       // Set a 500ms timeout on the sensor. (Stop waiting and respond with an error)
-      sensor.setTimeout(500);
+      sensor.setTimeout(timeout_);
 
       if (!sensor.init()) {
         RCLCPP_ERROR(this->get_logger(), "Sensor offline!");
@@ -32,22 +37,23 @@ class Vl53l1xPublisher : public rclcpp::Node
       // medium and long distance modes. See the VL53L1X datasheet for more
       // information on range and timing limits.
       sensor.setDistanceMode(Vl53l1x::Long);
-      sensor.setMeasurementTimingBudget(50000);
+      sensor.setMeasurementTimingBudget(timing_budget_);
 
       // Start continuous readings at a rate of one measurement every 100 ms (the
       // inter-measurement period). This period should be at least as long as the
       // timing budget.
-      sensor.startContinuous(100);
+      sensor.startContinuous( static_cast<int>(1000.0 / freq_) );  // Hardcode testcase 100
+      
 
       // Setup the publisher
       publisher_ = this->create_publisher<sensor_msgs::msg::Range>("vl53l1x/range", 5);
       timer_ = this->create_wall_timer(
-      250ms, std::bind(&Vl53l1xPublisher::timer_callback, this));
+        std::chrono::milliseconds(static_cast<int>(1000.0 / freq_)), 
+        std::bind(&Vl53l1xPublisher::timer_callback, this));
     }
 
   private:
-    Vl53l1x sensor;
-
+    
     void timer_callback()
     {
       int distance = sensor.read_range();
@@ -75,7 +81,11 @@ class Vl53l1xPublisher : public rclcpp::Node
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<sensor_msgs::msg::Range>::SharedPtr publisher_;
-    size_t count_;
+    Vl53l1x sensor;
+    unsigned int timeout_;
+    unsigned int timing_budget_;
+    double freq_;
+    
 };
 
 int main(int argc, char * argv[])
